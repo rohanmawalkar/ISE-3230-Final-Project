@@ -1,0 +1,95 @@
+import gurobipy as gp
+from gurobipy import GRB
+
+m = gp.Model("age_of_empires_ii")
+m.Params.LogToConsole = 0
+n = 50
+
+s = m.addVars(n, name="s", vtype=GRB.BINARY) # whether a stone building was made during the turn
+f = m.addVars(n, name="f", vtype=GRB.BINARY) # whether a food building was made during the turn
+w = m.addVars(n, name="w", vtype=GRB.BINARY) # whether a wood building was made during the turn
+g = m.addVars(n, name="g", vtype=GRB.BINARY) # whether a gold building was made during the turn
+
+p = m.addVars(n, lb=0, name="p", vtype=GRB.INTEGER) # population made in each turn
+
+sol1 = m.addVars(n, lb=0, name="sol1", vtype=GRB.INTEGER) # amt of soldier type 1 made in each turn
+sol2 = m.addVars(n, lb=0, name="sol2", vtype=GRB.INTEGER) # amt of soldier type 2 made in each turn
+
+sp = m.addVars(n, lb=0, name="sp", vtype=GRB.INTEGER) # num population assigned to stone buildings during this turn
+fp = m.addVars(n, lb=0, name="fp", vtype=GRB.INTEGER) # num population assigned to food buildings during this turn
+wp = m.addVars(n, lb=0, name="wp", vtype=GRB.INTEGER) # num population assigned to wood buildings during this turn
+gp = m.addVars(n, lb=0, name="gp", vtype=GRB.INTEGER) # num population assigned to gold buildings during this turn
+
+stone = m.addVars(n, lb=0, name="stone")
+food = m.addVars(n, lb=0, name="food")
+wood = m.addVars(n, lb=0, name="wood")
+gold = m.addVars(n, lb=0, name="gold")
+
+sb = m.addVars(n, lb=0, name="sb", vtype=GRB.INTEGER)
+fb = m.addVars(n, lb=0, name="fb", vtype=GRB.INTEGER)
+wb = m.addVars(n, lb=0, name="wb", vtype=GRB.INTEGER)
+gb = m.addVars(n, lb=0, name="gb", vtype=GRB.INTEGER)
+
+#m.setObjective(, GRB.MAXIMIZE) #TODO:add objective function
+
+#initializations
+m.addConstr(stone[0] == 0)
+m.addConstr(food[0] == 0)
+m.addConstr(wood[0] == 200)
+m.addConstr(gold[0] == 0)
+m.addConstr(sb[0] == 0)
+m.addConstr(fb[0] == 0)
+m.addConstr(wb[0] == 0)
+m.addConstr(gb[0] == 0)
+
+
+for i in range(1, n):
+	m.addConstr(sb[i] == sb[i-1] + s[i-1])
+	m.addConstr(fb[i] == fb[i-1] + f[i-1])
+	m.addConstr(wb[i] == wb[i-1] + w[i-1])
+	m.addConstr(gb[i] == gb[i-1] + g[i-1])
+
+for i in range(1, n):
+	m.addConstr(stone[i] == stone[i-1] - 100*g[i-1] - 2.5*gb[i-1] + 2.8*sp[i-1])
+	m.addConstr(food[i] == food[i-1] + 3.8*fp[i-1])
+	m.addConstr(wood[i] == wood[i-1] - 100*s[i-1] - 50*f[i-1] - 100*w[i-1] + 5.1*wp[i-1])
+	m.addConstr(gold[i] == gold[i-1] + 0.32*gp[i-1])
+
+for i in range(n):
+	m.addConstr(100*g[i] + 2.5*gb[i] <= stone[i])
+	m.addConstr(100*s[i] + 50*f[i] + 100*w[i] <= wood[i])
+
+for i in range(n):
+	m.addConstr(sp[i] <= 10*sb[i])
+	m.addConstr(fp[i] <= 5*fb[i])
+	m.addConstr(wp[i] <= 10*wb[i])
+	m.addConstr(gp[i] <= 10*gb[i])
+
+for i in range(n):
+	m.addConstr(s[i] >= 0)
+	m.addConstr(f[i] >= 0)
+	m.addConstr(w[i] >= 0)
+	m.addConstr(g[i] >= 0)
+	m.addConstr(p[i] >= 0)
+	m.addConstr(sol1[i] >= 0)
+	m.addConstr(sol2[i] >= 0)
+	m.addConstr(sp[i] >= 0)
+	m.addConstr(fp[i] >= 0)
+	m.addConstr(wp[i] >= 0)
+	m.addConstr(gp[i] >= 0)
+	m.addConstr(stone[i] >= 0)
+	m.addConstr(food[i] >= 0)
+	m.addConstr(wood[i] >= 0)
+	m.addConstr(gold[i] >= 0)
+	m.addConstr(sb[i] >= 0)
+	m.addConstr(fb[i] >= 0)
+	m.addConstr(wb[i] >= 0)
+	m.addConstr(gb[i] >= 0)
+
+#TODO: add other constraints
+
+m.optimize()
+
+print("obj_func = ", m.objVal)
+for v in m.getVars():
+    print('%s = %g' % (v.varName, v.x))
