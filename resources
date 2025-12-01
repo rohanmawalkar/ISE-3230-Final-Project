@@ -68,28 +68,6 @@ for i in range(n):
 	m.addConstr(wp[i] <= 10*wb[i])
 	m.addConstr(gp[i] <= 10*gb[i])
 
-# nonnegativity
-for i in range(n):
-	m.addConstr(s[i] >= 0)
-	m.addConstr(f[i] >= 0)
-	m.addConstr(w[i] >= 0)
-	m.addConstr(g[i] >= 0)
-	m.addConstr(p[i] >= 0)
-	m.addConstr(sol1[i] >= 0)
-	m.addConstr(sol2[i] >= 0)
-	m.addConstr(sp[i] >= 0)
-	m.addConstr(fp[i] >= 0)
-	m.addConstr(wp[i] >= 0)
-	m.addConstr(gp[i] >= 0)
-	m.addConstr(stone[i] >= 0)
-	m.addConstr(food[i] >= 0)
-	m.addConstr(wood[i] >= 0)
-	m.addConstr(gold[i] >= 0)
-	m.addConstr(sb[i] >= 0)
-	m.addConstr(fb[i] >= 0)
-	m.addConstr(wb[i] >= 0)
-	m.addConstr(gb[i] >= 0)
-
 
 ## constraints determining population used each turn is not above amt of existing population
 
