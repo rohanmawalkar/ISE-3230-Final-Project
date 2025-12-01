@@ -32,7 +32,7 @@ fb = m.addVars(n, lb=0, name="fb", vtype=GRB.INTEGER) # amount of food buildings
 wb = m.addVars(n, lb=0, name="wb", vtype=GRB.INTEGER) # amount of wood buildings available at beginning of turn
 gb = m.addVars(n, lb=0, name="gb", vtype=GRB.INTEGER) # amount of gold buildings available at beginning of turn
 
-#m.setObjective(, GRB.MAXIMIZE) #TODO:add objective function
+m.setObjective(gold[49] - 120*sol2[49] + 1.8*gp[49], GRB.MAXIMIZE)
 
 # initializations
 m.addConstr(stone[0] == 0)
