@@ -12,6 +12,8 @@ g = m.addVars(n, name="g", vtype=GRB.BINARY) # whether a gold building was made 
 
 p = m.addVars(n, lb=0, name="p", vtype=GRB.INTEGER) # population made in each turn
 
+pl = m.addVars((n-20)//5, lb=0, name="p", vtype=GRB.INTEGER) # population lost in each battle
+
 sol1 = m.addVars(n, lb=0, name="sol1", vtype=GRB.INTEGER) # amt of soldier type 1 made in each turn
 sol2 = m.addVars(n, lb=0, name="sol2", vtype=GRB.INTEGER) # amt of soldier type 2 made in each turn
 
