@@ -16,10 +16,10 @@ w = m.addVars(turns, vtype=GRB.BINARY, name="wBuild")  # wood building
 g = m.addVars(turns, vtype=GRB.BINARY, name="gBuild")  # gold building
 
 # Buildings available at start of each turn
-sb = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="sb")
-fb = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="fb")
-wb = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="wb")
-gb = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="gb")
+sb = m.addVars(states, lb=0, vtype=GRB.INTEGER, name="sb")
+fb = m.addVars(states, lb=0, vtype=GRB.INTEGER, name="fb")
+wb = m.addVars(states, lb=0, vtype=GRB.INTEGER, name="wb")
+gb = m.addVars(states, lb=0, vtype=GRB.INTEGER, name="gb")
 
 # Resources at start of each turn
 stone = m.addVars(states, lb=0.0, vtype=GRB.CONTINUOUS, name="stone")
@@ -154,4 +154,5 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
+
 
