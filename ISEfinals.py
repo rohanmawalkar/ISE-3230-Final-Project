@@ -33,7 +33,7 @@ civ = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="civ")
 # The population created each turn
 popNew = m.addVars(turns, lb=0, vtype=GRB.INTEGER, name="popNew")
 
-# Soldiers owned
+# Soldiers trained
 sol1_start = m.addVars(turns, lb=0, vtype=GRB.INTEGER, name="sol1_start") # type 1 soldiers(inferior one)
 sol2_start = m.addVars(turns, lb=0, vtype=GRB.INTEGER, name="sol2_start") # type 2 soldiers(superior one)
 
@@ -160,6 +160,7 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
+
 
 
 
