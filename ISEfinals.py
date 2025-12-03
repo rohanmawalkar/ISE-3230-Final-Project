@@ -3,7 +3,7 @@ from gurobipy import GRB
 
 m = gp.Model("age_of_empires_ii")
 m.Params.LogToConsole = 1 
-m.Params.TimeLimit = 60
+m.Params.TimeLimit = 90
 
 n = 50
 turns = range(n)       
@@ -160,6 +160,7 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
+
 
 
 
