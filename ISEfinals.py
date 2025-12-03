@@ -38,7 +38,7 @@ sol1_start = m.addVars(turns, lb=0, vtype=GRB.INTEGER, name="sol1_start") # type
 sol2_start = m.addVars(turns, lb=0, vtype=GRB.INTEGER, name="sol2_start") # type 2 soldiers(superior one)
 
 # The current number of soldiers alive 
-# (I keep the track of their number because some solider might have combat ability remained)
+# (We keep the track of their number because some soldiers may have combat ability remaining)
 sol1_alive = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="sol1_alive")
 sol2_alive = m.addVars(states, lb=0.0, vtype=GRB.INTEGER, name="sol2_alive")
 
@@ -160,5 +160,6 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
+
 
 
