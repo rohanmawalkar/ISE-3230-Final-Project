@@ -160,5 +160,3 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
-
-
