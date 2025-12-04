@@ -62,4 +62,5 @@ for i in range(50):
     equation = equation + ")"
 
     #print equation
+
     print(equation)
