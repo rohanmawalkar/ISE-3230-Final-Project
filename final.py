@@ -108,7 +108,7 @@ for t in turns:
     m.addConstr(spop[t] + fpop[t] + wpop[t] + gpop[t] + sol1_start[t] + sol2_start[t] <= civ[t], name=f"civ_usage_{t}")
 
 
-# Add the soliders planned to build this turn to the available soliders pool
+# Add the soldiers planned to build this turn to the available soliders pool
 # Type 1: 1-turn build
 for t in turns:
     m.addConstr(
@@ -160,3 +160,4 @@ m.optimize()
 print("obj_func = ", m.objVal)
 for v in m.getVars():
     print('%s = %g' % (v.varName, v.x))
+
